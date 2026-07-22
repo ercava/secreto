@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mupi19th!</title>
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cinzel:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Reenie+Beanie&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="hand-cursor">
+    <!-- Vignette Background Overlay -->
+    <div class="vignette-overlay"></div>
+
+    <!-- Background Audio -->
+    <audio id="bg-audio" loop src="theoceansanditsengines.mp3"></audio>
+
+    <div class="app-container">
+        <!-- Folders Messy Desk Layout -->
+        <main class="desk-folders">
+            <!-- Bio Folder -->
+            <div class="folder-card messy-folder-1" onclick="openFolder(event, 'bio')" id="folder-bio">
+                <div class="folder-tab"></div>
+                <div class="folder-cover">
+                    <div class="cover-photo-frame" onclick="handlePhotoClick(event, this)">
+                        <!-- Tape / Plaster Straps -->
+                        <div class="tape-strap top-left"></div>
+                        <div class="tape-strap bottom-right"></div>
+
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <img src="bio/bio.jpeg" alt="Bio Photo">
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="handwritten-desc">the chosen eight people</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Friends Folder -->
+            <div class="folder-card messy-folder-2" onclick="openFolder(event, 'friends')" id="folder-friends">
+                <div class="folder-tab"></div>
+                <div class="folder-cover">
+                    <div class="cover-photo-frame" onclick="handlePhotoClick(event, this)">
+                        <!-- Tape / Plaster Straps -->
+                        <div class="tape-strap top-left"></div>
+                        <div class="tape-strap bottom-right"></div>
+
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <img src="friends/friends.jpg" alt="Friends Photo">
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="handwritten-desc">those faces are always so familiar </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kebsen Folder -->
+            <div class="folder-card messy-folder-3" onclick="openFolder(event, 'kebsen')" id="folder-kebsen">
+                <div class="folder-tab"></div>
+                <div class="folder-cover">
+                    <div class="cover-photo-frame" onclick="handlePhotoClick(event, this)">
+                        <!-- Tape / Plaster Straps -->
+                        <div class="tape-strap top-left"></div>
+                        <div class="tape-strap bottom-right"></div>
+
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <img src="kebsen/kebsen.jpeg" alt="Kebsen Photo">
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="handwritten-desc">not blood related, but a family nonetheless</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Folder Modal (Opened folder with scattered mini envelopes) -->
+        <div class="folder-modal" id="folder-modal">
+            <div class="modal-overlay" onclick="closeFolder()"></div>
+            <div class="opened-folder-desk" id="opened-folder-desk">
+                <!-- Top Header Bar with Exit Arrow to Avoid Envelope Overlap -->
+                <div class="folder-modal-header">
+                    <button class="natural-exit-btn" onclick="closeFolder()" title="Exit Folder">
+                        <span class="exit-icon">↗</span>
+                    </button>
+                </div>
+                <div class="scattered-envelopes-canvas" id="envelopes-canvas">
+                    <!-- Randomly positioned mini envelopes -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Individual Letter Modal with Clipped Photo at Top -->
+        <div class="letter-modal" id="letter-modal">
+            <div class="modal-overlay" onclick="closeLetter()"></div>
+            <div class="letter-paper-clipped" id="letter-paper-desk">
+                <button class="natural-exit-btn letter-exit-btn" onclick="closeLetter()" title="Close Letter">
+                    <span class="exit-icon">↗</span>
+                </button>
+                
+                <!-- Realistic Paperclip at Top Edge -->
+                <div class="top-paperclip"></div>
+
+                <div class="letter-vertical-content">
+                    <!-- Clipped Photo / Video at the TOP -->
+                    <div class="top-clipped-photo" id="letter-media-container">
+                        <!-- Attached media -->
+                    </div>
+                    
+                    <!-- Letter Text Underneath -->
+                    <div class="letter-text-body" id="letter-body">
+                        <!-- Handwritten letter content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Far Desk Space Down for Bottom Envelope -->
+        <div class="far-desk-space"></div>
+
+        <!-- Bottom Envelope Section -->
+        <section class="envelope-section">
+            <div class="envelope-wrapper">
+                <div class="envelope" id="bottom-envelope" onclick="toggleBottomEnvelope(event)">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-front">
+                        <div class="wax-seal">Z</div>
+                    </div>
+                    <div class="envelope-paper" id="envelope-paper" onclick="event.stopPropagation()">
+                        <div class="envelope-paper-inner">
+                            <button class="close-envelope-btn" onclick="toggleBottomEnvelope(event)">&times;</button>
+                            <!-- Continuous Physically Long Letter Sheet -->
+                            <div class="z-long-letter-sheet">
+                                <div class="z-text-body" id="z-message"></div>
+                                <div class="z-letter-footer">
+                                    <div class="z-clipped-photo-container">
+                                        <div class="z-mini-paperclip"></div>
+                                        <img src="z/pic.jpeg" alt="Attached Pic" class="z-direct-pic">
+                                    </div>
+                                    <div class="z-signature">
+                                        <img src="z/sign.png" alt="Signature" class="z-sign">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
