@@ -81,6 +81,14 @@ const memorandumData = [
     "mediaType": "image"
   },
   {
+    "name": "alyssa",
+    "initials": "AL",
+    "message": "HAPPY BIRTHDAY KAKAK IMUTTT🌟🥳😻\nselamat bertambah umur yaa, kangen banget ngabisin waktu ngedis bareng kakakk hehee🙃\nsemoga rezekinya selalu deres sampai tumpah-tumpah, baik dalam karir, hidup, pasangan(?) pokoknya semoga selalu dimudahkan dalam mencapai apapun yang kakak mauu🙌 😉\n\ntetap bahagia selalu dan aku tunggu  vlog selanjutnya hihii\n-salam sayang dari adik kedis, alyssa-",
+    "category": "friends",
+    "media": "friends/alyssa.jpeg",
+    "mediaType": "image"
+  },
+  {
     "name": "erpan",
     "initials": "ER",
     "message": "happy bdayy kaa mutiii😆😆\naduu, ternyata masih aga susah yhaa masuk kelas 11 kaa, takut nanti kelasnya ga sesuai bidang, ekspetasi, dan some hectic at times,\noiyaa, aku juga udah sempet ketemu debsenn kaa, bang andro ny juga sibuk osp, tapi moga kita masih bisa ketemu satu keluarga bareng lagii🥺\nselamat yaa kaa udah keterima di sith r yhaa, semoga kaka disana bisa merjuangin impiannyaa kaa😁😁\nsekali lagi selamat ulang taunnn yaa kaa, nanti aku suruh debsen kita ucapin jugaakk, heheeyy",
