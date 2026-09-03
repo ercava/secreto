@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hbd lepin!</title>
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cinzel:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Reenie+Beanie&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="hand-cursor">
+    <!-- Vignette Background Overlay -->
+    <div class="vignette-overlay"></div>
+
+    <!-- Background Audio -->
+    <audio id="bg-audio" loop src="theoceansanditsengines.mp3"></audio>
+
+    <div class="app-container">
+        <!-- Folders Messy Desk Layout (3 Folders) -->
+        <main class="desk-folders">
+            <!-- Aquila Folder -->
+            <div class="folder-card messy-folder-1" onclick="openFolder(event, 'aquila')" id="folder-aquila">
+                <div class="folder-tab"></div>
+                <div class="folder-cover">
+                    <div class="cover-photo-frame" onclick="handlePhotoClick(event, this)">
+                        <!-- Tape / Plaster Straps -->
+                        <div class="tape-strap top-left"></div>
+                        <div class="tape-strap bottom-right"></div>
+
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <img src="aquila/aquila.jpg" alt="Aquila Photo">
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="handwritten-desc">AQUILLAA WRUAAH</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Oshi Folder -->
+            <div class="folder-card messy-folder-2" onclick="openFolder(event, 'oshi')" id="folder-oshi">
+                <div class="folder-tab"></div>
+                <div class="folder-cover">
+                    <div class="cover-photo-frame" onclick="handlePhotoClick(event, this)">
+                        <!-- Tape / Plaster Straps -->
+                        <div class="tape-strap top-left"></div>
+                        <div class="tape-strap bottom-right"></div>
+
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <img src="oshi/oshi.jpg" alt="Oshi Photo">
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="handwritten-desc">friends who struggle with us</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Waris Folder -->
+            <div class="folder-card messy-folder-3" onclick="openFolder(event, 'waris')" id="folder-waris">
+                <div class="folder-tab"></div>
+                <div class="folder-cover">
+                    <div class="cover-photo-frame" onclick="handlePhotoClick(event, this)">
+                        <!-- Tape / Plaster Straps -->
+                        <div class="tape-strap top-left"></div>
+                        <div class="tape-strap bottom-right"></div>
+
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <img src="waris/waris.jpg" alt="Waris Photo">
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="handwritten-desc">friends we meet along the way</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Scattered Photos Section Below Folders -->
+        <section class="scattered-arc-container">
+            <div class="scattered-arc-grid" id="scattered-arc-grid">
+                <!-- Dynamically generated scattered photos -->
+            </div>
+        </section>
+
+        <!-- Folder Modal (Opened folder with scattered mini envelopes) -->
+        <div class="folder-modal" id="folder-modal">
+            <div class="modal-overlay" onclick="closeFolder()"></div>
+            <div class="opened-folder-desk" id="opened-folder-desk">
+                <!-- Top Header Bar with Exit Arrow -->
+                <div class="folder-modal-header">
+                    <button class="natural-exit-btn" onclick="closeFolder()" title="Exit Folder">
+                        <span class="exit-icon">↗</span>
+                    </button>
+                </div>
+                <div class="scattered-envelopes-canvas" id="envelopes-canvas">
+                    <!-- Randomly positioned mini envelopes -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Individual Letter Modal -->
+        <div class="letter-modal" id="letter-modal">
+            <div class="modal-overlay" onclick="closeLetter()"></div>
+            <div class="letter-paper-clipped" id="letter-paper-desk">
+                <button class="natural-exit-btn letter-exit-btn" onclick="closeLetter()" title="Close Letter">
+                    <span class="exit-icon">↗</span>
+                </button>
+                
+                <div class="top-paperclip"></div>
+
+                <div class="letter-vertical-content">
+                    <div class="top-clipped-photo" id="letter-media-container"></div>
+                    <div class="letter-sender" id="letter-sender"></div>
+                    <div class="letter-text-body" id="letter-body"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3D Interactive Rising Photo Modal -->
+        <div class="photo-modal-3d" id="photo-modal-3d">
+            <div class="modal-overlay" onclick="closePhoto3D()"></div>
+            <div class="photo-3d-wrapper" id="photo-3d-wrapper">
+                <button class="natural-exit-btn photo-exit-btn" onclick="closePhoto3D()" title="Close Photo">
+                    <span class="exit-icon">↗</span>
+                </button>
+                <div class="photo-3d-card" id="photo-3d-card">
+                    <div class="tape-strap top-left"></div>
+                    <div class="tape-strap bottom-right"></div>
+                    <div class="photo-3d-image-wrap">
+                        <img id="photo-3d-img" src="" alt="Photo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
