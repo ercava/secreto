@@ -1,0 +1,65 @@
+[
+  {
+    "id": 0,
+    "xCenter": -1152,
+    "zCenter": 1792,
+    "scale": 0,
+    "dimension": "minecraft:overworld",
+    "image": "maps/map_0.png",
+    "imageLarge": "maps/map_0_large.png"
+  },
+  {
+    "id": 1,
+    "xCenter": -256,
+    "zCenter": 0,
+    "scale": 0,
+    "dimension": "minecraft:overworld",
+    "image": "maps/map_1.png",
+    "imageLarge": "maps/map_1_large.png"
+  },
+  {
+    "id": 2,
+    "xCenter": -192,
+    "zCenter": 64,
+    "scale": 1,
+    "dimension": "minecraft:overworld",
+    "image": "maps/map_2.png",
+    "imageLarge": "maps/map_2_large.png"
+  },
+  {
+    "id": 3,
+    "xCenter": 1280,
+    "zCenter": 768,
+    "scale": 0,
+    "dimension": "minecraft:overworld",
+    "image": "maps/map_3.png",
+    "imageLarge": "maps/map_3_large.png"
+  },
+  {
+    "id": 4,
+    "xCenter": -768,
+    "zCenter": 2304,
+    "scale": 0,
+    "dimension": "minecraft:overworld",
+    "image": "maps/map_4.png",
+    "imageLarge": "maps/map_4_large.png"
+  },
+  {
+    "id": 5,
+    "xCenter": 320,
+    "zCenter": 1856,
+    "scale": 1,
+    "dimension": "minecraft:overworld",
+    "image": "maps/map_5.png",
+    "imageLarge": "maps/map_5_large.png"
+  },
+  {
+    "id": 6,
+    "xCenter": 832,
+    "zCenter": -448,
+    "scale": 1,
+    "dimension": "minecraft:overworld",
+    "image": "maps/map_6.png",
+    "imageLarge": "maps/map_6_large.png"
+  }
+]

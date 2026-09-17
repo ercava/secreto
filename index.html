@@ -1,0 +1,2161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Honeybadger Error Monitoring -->
+  <script src="https://js.honeybadger.io/v6.0/honeybadger.min.js"></script>
+  <script>
+    Honeybadger.configure({
+      apiKey: "hbp_0VSBjwCySllsceZY2uK9YlrH1meVgM3AfzTs",
+      environment: "production"
+    });
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nabil Oshi</title>
+  <link rel="icon" type="image/png" href="assets/nabil-maison-kita-icon-1024.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;900&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Leaflet CSS for interactive big world map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <style>
+    :root {
+      --primary: #26568c;
+      --primary-light: #3a7bc8;
+      --accent: #152638;
+      --bg: #ffffff;
+      --bg-light: #f0f4f8;
+      --text: #1f2937;
+      --text-light: #4b5563;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --card-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      --card-hover: 0 8px 24px rgba(0,0,0,0.1);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --font-heading: 'Unbounded', system-ui, sans-serif;
+      --font-body: 'Mulish', system-ui, -apple-system, Arial, sans-serif;
+      
+      --c-mod: #e0f2fe;
+      --c-plugin: #ecfdf5;
+      --c-purple: #7c3aed;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 0 1.5rem; }
+    .section { padding: 4.5rem 0; }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2.5rem;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .section-sub strong { color: var(--primary); }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      padding: 0.65rem 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; }
+    nav .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    nav .nav-logo img {
+      height: 36px;
+      width: 36px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1.5px solid var(--primary-light);
+    }
+    nav .nav-links { display: flex; gap: 0.35rem; align-items: center; }
+    nav .nav-links a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+    }
+    nav .nav-links a:hover { background: var(--bg-light); color: var(--primary); }
+    .nav-cta {
+      background: var(--accent) !important;
+      color: white !important;
+      padding: 0.45rem 1.1rem !important;
+    }
+    .nav-cta:hover { background: var(--primary) !important; color: white !important; }
+
+    /* Hero */
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7.5rem 1.5rem 4rem;
+      background: linear-gradient(160deg, var(--accent) 0%, #1a2f4a 40%, #1e3a5f 70%, var(--primary) 100%);
+      position: relative;
+      overflow: hidden;
+      color: white;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 28' width='56' height='28'%3E%3Cpath fill='%23ffffff' fill-opacity='0.035' d='M56 26v2h-7.75c2.3-1.27 4.94-2 7.75-2zm-26 2a2 2 0 1 0-4 0h-4.09A25.98 25.98 0 0 0 0 16v-2c.67 0 1.34.02 2 .07V14a2 2 0 0 0-2-2v-2a4 4 0 0 1 3.98 3.6 28.09 28.09 0 0 1 2.8-3.86A8 8 0 0 0 0 6V4a9.99 9.99 0 0 1 8.17 4.23c.94-.95 1.96-1.83 3.03-2.63A13.98 13.98 0 0 0 0 0h7.75c2 1.1 3.73 2.63 5.1 4.45 1.12-.72 2.3-1.37 3.53-1.93A20.1 20.1 0 0 0 14.28 0h2.7c.45.56.88 1.14 1.29 1.74 1.3-.48 2.63-.87 4-1.15-.11-.2-.23-.4-.36-.59H26v.07a28.4 28.4 0 0 1 4 0V0h4.09l-.37.59c1.38.28 2.72.67 4.01 1.15.4-.6.84-1.18 1.3-1.74h2.69a20.1 20.1 0 0 0-2.1 2.52c1.23.56 2.41 1.2 3.54 1.93A16.08 16.08 0 0 1 48.25 0H56c-4.58 0-8.65 2.2-11.2 5.6 1.07.8 2.09 1.68 3.03 2.63A9.99 9.99 0 0 1 56 4v2a8 8 0 0 0-6.77 3.74c1.03 1.2 1.97 2.5 2.79 3.86A4 4 0 0 1 56 10v2a2 2 0 0 0-2 2.07 28.4 28.4 0 0 1 2-.07v2c-9.2 0-17.3 4.78-21.91 12H30zM7.75 28H0v-2c2.81 0 5.46.73 7.75 2zM56 20v2c-5.6 0-10.65 2.3-14.28 6h-2.7c4.04-4.89 10.15-8 16.98-8zm-39.03 8h-2.69C10.65 24.3 5.6 22 0 22v-2c6.83 0 12.94 3.11 16.97 8zm15.01-.4a28.09 28.09 0 0 1 2.8-3.86 8 8 0 0 0-13.55 0c1.03 1.2 1.97 2.5 2.79 3.86a4 4 0 0 1 7.96 0zm14.29-11.86c1.3-.48 2.63-.87 4-1.15a25.99 25.99 0 0 0-44.55 0c1.38.28 2.72.67 4.01 1.15a21.98 21.98 0 0 1 36.54 0zm-5.43 2.71c1.13-.72 2.3-1.37 3.54-1.93a19.98 19.98 0 0 0-32.76 0c1.23.56 2.41 1.2 3.54 1.93a15.98 15.98 0 0 1 25.68 0zm-4.67 3.78c.94-.95 1.96-1.83 3.03-2.63a13.98 13.98 0 0 0-22.4 0c1.07.8 2.09 1.68 3.03 2.63a9.99 9.99 0 0 1 16.34 0z'%3E%3C/path%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+    .hero-avatar-wrap {
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+    .hero-avatar-img {
+      width: 140px;
+      height: 140px;
+      border-radius: var(--radius);
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hero-avatar-img:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: 2.9rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .hero .tagline {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.85);
+      max-width: 640px;
+      margin: 0 auto 1.75rem;
+      font-weight: 400;
+    }
+    .hero-btns { display: flex; gap: 0.85rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.25s;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+    }
+    .btn-primary { background: white; color: var(--accent); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); color: var(--primary); }
+    .btn-outline { border: 2px solid rgba(255,255,255,0.35); color: white; background: transparent; }
+    .btn-outline:hover { border-color: white; transform: translateY(-2px); background: rgba(255,255,255,0.08); }
+
+    /* Statistics Bar */
+    .stats-bar {
+      background: var(--bg-light);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 1.75rem 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      max-width: 920px;
+      margin: 0 auto;
+      gap: 1.25rem;
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .stat-item h3 { font-family: var(--font-heading); font-size: 1.7rem; color: var(--primary); font-weight: 700; }
+    .stat-item p { color: var(--muted); font-size: 0.82rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+
+    /* GARTIC GALLERY & VISUAL SEARCH SECTION */
+    .gartic-section {
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+    }
+    .search-box {
+      background: var(--bg-light);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    .search-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .clip-status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: var(--bg);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+    }
+    .clip-status-indicator .clip-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #94a3b8;
+    }
+    .clip-status-indicator.ready .clip-dot { background: #10b981; box-shadow: 0 0 6px #10b981; }
+    .clip-status-indicator.loading .clip-dot { background: #f59e0b; animation: pulse 1s infinite; }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+
+    .clip-search-input-wrap {
+      position: relative;
+      display: flex;
+      gap: 0.6rem;
+    }
+    .clip-search-input {
+      flex: 1;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--line);
+      background: white;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .clip-search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(38, 86, 140, 0.15);
+    }
+    .btn-clip-search {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0 1.5rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .btn-clip-search:hover { background: var(--primary-light); }
+
+    .clip-tags-row {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.85rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .clip-tags-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-right: 0.25rem;
+    }
+    .clip-tag-btn {
+      background: white;
+      border: 1px solid var(--line);
+      color: var(--text-light);
+      font-size: 0.78rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .clip-tag-btn:hover, .clip-tag-btn.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .gartic-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+    .gartic-item-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: all 0.25s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .gartic-item-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--card-hover);
+      border-color: var(--primary-light);
+    }
+    .gartic-preview-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: #0f172a;
+      overflow: hidden;
+    }
+    .gartic-preview-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s;
+    }
+    .gartic-item-card:hover .gartic-preview-wrap img {
+      transform: scale(1.04);
+    }
+    .gif-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(15, 23, 42, 0.85);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+    .clip-score-badge {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      background: rgba(16, 185, 129, 0.9);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+    }
+    .gartic-card-body {
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 1;
+    }
+    .gartic-card-title {
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .gartic-card-meta {
+      font-size: 0.74rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Load More Button Wrap */
+    .gartic-load-more-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2.5rem;
+      gap: 0.6rem;
+    }
+    .btn-load-more {
+      background: var(--bg);
+      border: 1.5px solid var(--line);
+      color: var(--accent);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.75rem 2rem;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: var(--card-shadow);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.25s ease;
+    }
+    .btn-load-more:hover {
+      background: var(--bg-light);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--card-hover);
+    }
+    .load-more-count-txt {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* Modal for GIF playback */
+    .gif-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .gif-modal.active { display: flex; }
+    .gif-modal-content {
+      background: white;
+      border-radius: var(--radius);
+      max-width: 800px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 20px 48px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .gif-modal-img-wrap {
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-height: 520px;
+      overflow: hidden;
+    }
+    .gif-modal-img-wrap img {
+      max-width: 100%;
+      max-height: 520px;
+      object-fit: contain;
+      display: block;
+    }
+    .gif-modal-info {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+    }
+    .gif-modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .gif-modal-close:hover { background: rgba(0,0,0,0.9); }
+
+    /* BIG NAVIGABLE INTERACTIVE WORLD MAP */
+    #big-map {
+      background: #ffffff;
+      padding-bottom: 3.5rem;
+    }
+    .big-map-container {
+      background: #0b1329;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+      overflow: hidden;
+      position: relative;
+    }
+    .big-map-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 0.75rem 1.25rem;
+      color: white;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .big-map-toolbar .title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .quick-nav-btns {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .qnav-btn {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: white;
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .qnav-btn:hover {
+      background: var(--primary-light);
+      border-color: var(--primary-light);
+    }
+    #leafletMap {
+      height: 560px;
+      width: 100%;
+      background: #090e1a;
+    }
+    .leaflet-image-layer {
+      image-rendering: pixelated;
+    }
+    .map-legend-bar {
+      background: #0f172a;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.8rem;
+      padding: 0.65rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .coords-readout {
+      font-family: monospace;
+      color: #38bdf8;
+      font-weight: bold;
+    }
+
+    /* MODS & PLUGINS SECTION */
+    .mods-section {
+      background: var(--bg-light);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .mods-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .mod-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.35rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .mod-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--card-hover);
+      border-color: var(--primary);
+    }
+    .mod-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 0.65rem;
+    }
+    .mod-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .mod-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      letter-spacing: 0.03em;
+    }
+    .badge-perf { background: #dcfce7; color: #15803d; }
+    .badge-network { background: #e0f2fe; color: #0369a1; }
+    .badge-feature { background: #fef3c7; color: #b45309; }
+    .badge-tool { background: #ede9fe; color: #6d28d9; }
+    .mod-desc {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .mod-file {
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--bg-light);
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+      word-break: break-all;
+    }
+
+    /* GROUP GALLERY SECTION - CLEAN MINIMAL GRID */
+    .gallery-section {
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+    }
+    .gallery-grid-clean {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 1024px) {
+      .gallery-grid-clean {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 640px) {
+      .gallery-grid-clean {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+    }
+    .gallery-clean-item {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: #0f172a;
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .gallery-clean-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--card-hover);
+      border-color: var(--primary-light);
+    }
+    .gallery-clean-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .gallery-clean-item:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Lightbox Modal for Full Image View */
+    .photo-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(8px);
+      z-index: 2500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .photo-modal.active { display: flex; }
+    .photo-modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .photo-modal-img {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: var(--radius);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      object-fit: contain;
+    }
+    .photo-modal-caption {
+      margin-top: 1rem;
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      text-align: center;
+    }
+    .photo-modal-close {
+      position: absolute;
+      top: -2.5rem;
+      right: 0;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .photo-modal-close:hover {
+      background: rgba(255,255,255,0.4);
+    }
+
+    /* PLAYERS SECTION WITH AVATAR FACES */
+    .players-section {
+      background: var(--bg);
+    }
+    .players-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+    .player-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1rem 1.15rem;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.2s ease;
+    }
+    .player-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-hover);
+      border-color: var(--primary-light);
+    }
+    .player-avatar-box {
+      width: 54px;
+      height: 54px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #1e293b;
+      flex-shrink: 0;
+      position: relative;
+      border: 2px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .player-avatar-img {
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
+      object-fit: cover;
+    }
+    .player-info h4 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      color: var(--accent);
+      margin-bottom: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .player-sub {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+    .tag-bedrock {
+      background: #dbeafe;
+      color: #1e40af;
+      font-size: 0.68rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .tag-java {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 0.68rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .player-uuid-txt {
+      font-family: monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      cursor: pointer;
+      display: inline-block;
+      max-width: 190px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .player-uuid-txt:hover { color: var(--primary); text-decoration: underline; }
+
+    /* Download World Section */
+    .download-section {
+      background: var(--bg-light);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .download-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      align-items: stretch;
+    }
+    @media (max-width: 768px) {
+      .download-grid { grid-template-columns: 1fr; }
+    }
+    .download-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .download-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .download-card p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 1.25rem;
+    }
+    .world-meta-list {
+      list-style: none;
+      margin-bottom: 1.5rem;
+      background: var(--bg-light);
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+    }
+    .world-meta-list li {
+      font-size: 0.84rem;
+      color: var(--text-light);
+      display: flex;
+      justify-content: space-between;
+      padding: 0.35rem 0;
+      border-bottom: 1px dashed var(--line);
+    }
+    .world-meta-list li:last-child { border-bottom: none; }
+    .world-meta-list span.val {
+      font-weight: 700;
+      color: var(--accent);
+      font-family: monospace;
+    }
+
+    .btn-download-primary {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      justify-content: center;
+      padding: 0.85rem 1.5rem;
+      font-size: 0.95rem;
+    }
+    .btn-download-primary:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(38, 86, 140, 0.3);
+    }
+
+    .install-guide-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    .install-guide-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .steps-list {
+      list-style-type: decimal;
+      padding-left: 1.25rem;
+      font-size: 0.88rem;
+      color: var(--text-light);
+    }
+    .steps-list li {
+      margin-bottom: 0.75rem;
+      line-height: 1.5;
+    }
+    .steps-list code {
+      background: #e2e8f0;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: #0f172a;
+    }
+
+    /* Specs & Seed */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 768px) {
+      .specs-grid { grid-template-columns: 1fr; }
+    }
+    .spec-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.25s;
+    }
+    .spec-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--card-hover);
+      border-color: var(--primary-light);
+    }
+    .spec-card .icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+    .spec-card h4 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+    .spec-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .copy-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--bg-light);
+      border: 1px solid var(--line);
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.82rem;
+      cursor: pointer;
+      color: var(--primary);
+      transition: all 0.2s;
+    }
+    .copy-chip:hover {
+      background: #e1ecf8;
+      border-color: var(--primary);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--accent);
+      color: white;
+      padding: 3.5rem 0 2.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    footer p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+    footer a { color: #60a5fa; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* Toast notification */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--accent);
+      color: white;
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      font-size: 0.85rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      z-index: 3000;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav>
+    <div class="wrap">
+      <a href="#" class="nav-logo">
+        <img src="assets/nabil-maison-kita-icon-1024.png" alt="Nabil Oshi Logo" />
+        <span>Nabil Oshi</span>
+      </a>
+      <div class="nav-links">
+        <a href="#gallery">Moments</a>
+        <a href="#gartic">Gartic Archive</a>
+        <a href="#big-map">Minecraft World</a>
+        <a href="#mods">Mods</a>
+        <a href="#players">Players</a>
+        <a href="#download" class="nav-cta">Download World</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-avatar-wrap">
+        <img src="assets/nabil-maison-kita-icon-1024.png" alt="Nabil Oshi" class="hero-avatar-img" />
+      </div>
+      <h1>This is Nabil Oshi</h1>
+      <p class="tagline">
+        Kenalin, Oshi kami nabil cuy!
+      </p>
+      <div class="hero-btns">
+        <a href="#gallery" class="btn btn-primary">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Our Moments
+        </a>
+        <a href="#gartic" class="btn btn-outline">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Search Gartic GIFs
+        </a>
+        <a href="#big-map" class="btn btn-outline">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          Explore World Map
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Statistics Bar -->
+  <section class="stats-bar">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3>129</h3>
+        <p>Gartic Phone GIFs</p>
+      </div>
+      <div class="stat-item">
+        <h3>1.51 GB</h3>
+        <p>Explored World</p>
+      </div>
+      <div class="stat-item">
+        <h3>160</h3>
+        <p>Region MCA Chunks</p>
+      </div>
+      <div class="stat-item">
+        <h3>17</h3>
+        <p>Active Players</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GROUP MOMENTS & EVENT GALLERY -->
+  <section class="section gallery-section" id="gallery">
+    <div class="wrap">
+      <h2 class="section-title">Nabil & Friends </h2>
+      <p class="section-sub">
+        Foto foto cuy.
+      </p>
+
+      <div class="gallery-grid-clean">
+        <div class="gallery-clean-item" onclick="openPhotoModal('assets/WhatsApp Image 2026-09-18 at 01.14.04 (2).jpeg')">
+          <img src="assets/WhatsApp Image 2026-09-18 at 01.14.04 (2).jpeg" alt="Moment Photo" loading="lazy" />
+        </div>
+        <div class="gallery-clean-item" onclick="openPhotoModal('assets/WhatsApp Image 2026-09-18 at 01.14.02.jpeg')">
+          <img src="assets/WhatsApp Image 2026-09-18 at 01.14.02.jpeg" alt="Moment Photo" loading="lazy" />
+        </div>
+        <div class="gallery-clean-item" onclick="openPhotoModal('assets/WhatsApp Image 2026-09-18 at 01.14.03.jpeg')">
+          <img src="assets/WhatsApp Image 2026-09-18 at 01.14.03.jpeg" alt="Moment Photo" loading="lazy" />
+        </div>
+        <div class="gallery-clean-item" onclick="openPhotoModal('assets/WhatsApp Image 2026-09-18 at 01.14.06.jpeg')">
+          <img src="assets/WhatsApp Image 2026-09-18 at 01.14.06.jpeg" alt="Moment Photo" loading="lazy" />
+        </div>
+        <div class="gallery-clean-item" onclick="openPhotoModal('assets/WhatsApp Image 2026-09-18 at 01.14.02 (1).jpeg')">
+          <img src="assets/WhatsApp Image 2026-09-18 at 01.14.02 (1).jpeg" alt="Moment Photo" loading="lazy" />
+        </div>
+        <div class="gallery-clean-item" onclick="openPhotoModal('assets/WhatsApp Image 2026-09-18 at 01.14.04.jpeg')">
+          <img src="assets/WhatsApp Image 2026-09-18 at 01.14.04.jpeg" alt="Moment Photo" loading="lazy" />
+        </div>
+        <div class="gallery-clean-item" onclick="openPhotoModal('assets/WhatsApp Image 2026-09-18 at 01.14.03 (1).jpeg')">
+          <img src="assets/WhatsApp Image 2026-09-18 at 01.14.03 (1).jpeg" alt="Moment Photo" loading="lazy" />
+        </div>
+        <div class="gallery-clean-item" onclick="openPhotoModal('assets/WhatsApp Image 2026-09-18 at 01.14.04 (1).jpeg')">
+          <img src="assets/WhatsApp Image 2026-09-18 at 01.14.04 (1).jpeg" alt="Moment Photo" loading="lazy" />
+        </div>
+        <div class="gallery-clean-item" onclick="openPhotoModal('assets/WhatsApp Image 2026-09-18 at 01.14.05.jpeg')">
+          <img src="assets/WhatsApp Image 2026-09-18 at 01.14.05.jpeg" alt="Moment Photo" loading="lazy" />
+        </div>
+        <div class="gallery-clean-item" onclick="openPhotoModal('assets/WhatsApp Image 2026-09-18 at 01.14.05 (1).jpeg')">
+          <img src="assets/WhatsApp Image 2026-09-18 at 01.14.05 (1).jpeg" alt="Moment Photo" loading="lazy" />
+        </div>
+        <div class="gallery-clean-item" onclick="openPhotoModal('assets/WhatsApp Image 2026-09-18 at 01.14.05 (2).jpeg')">
+          <img src="assets/WhatsApp Image 2026-09-18 at 01.14.05 (2).jpeg" alt="Moment Photo" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo Lightbox Modal -->
+  <div class="photo-modal" id="photoModal" onclick="closePhotoModal(event)">
+    <div class="photo-modal-content" onclick="event.stopPropagation()">
+      <button class="photo-modal-close" onclick="closePhotoModal()">&times;</button>
+      <img id="photoModalImg" class="photo-modal-img" src="" alt="Full Preview" />
+    </div>
+  </div>
+
+  <!-- GARTIC PHONE ARCHIVE -->
+  <section class="section gartic-section" id="gartic">
+    <div class="wrap">
+      <h2 class="section-title">Gartic Phone</h2>
+      <p class="section-sub">
+        Malam malam malah ngelawak. Gambarnya ngaco semua deh
+      </p>
+
+      <!-- Visual Search Bar -->
+      <div class="search-box">
+        <div class="search-header-row">
+          <span style="font-family: var(--font-heading); font-weight: 700; font-size: 0.95rem; color: var(--accent);">
+            Visual Search
+          </span>
+          <div class="clip-status-indicator ready" id="clipStatus">
+            <span class="clip-dot"></span>
+            <span id="clipStatusText">129 GIFs Indexed</span>
+          </div>
+        </div>
+
+        <div class="clip-search-input-wrap">
+          <input 
+            type="text" 
+            id="clipInput" 
+            class="clip-search-input" 
+            placeholder="Search visual content (e.g. girl, hair, eye, monster, smile, car, blue, green)..." 
+            autocomplete="off"
+          />
+          <button class="btn-clip-search" id="btnClipSearch">
+            Search
+          </button>
+        </div>
+
+        <!-- Quick filter tags -->
+        <div class="clip-tags-row">
+          <span class="clip-tags-label">Suggestions:</span>
+          <button class="clip-tag-btn" onclick="applyQuickSearch('face')">face</button>
+          <button class="clip-tag-btn" onclick="applyQuickSearch('hair')">hair</button>
+          <button class="clip-tag-btn" onclick="applyQuickSearch('monster')">monster</button>
+          <button class="clip-tag-btn" onclick="applyQuickSearch('anime')">anime</button>
+          <button class="clip-tag-btn" onclick="applyQuickSearch('eyes')">eyes</button>
+          <button class="clip-tag-btn" onclick="applyQuickSearch('blue')">blue</button>
+          <button class="clip-tag-btn" onclick="applyQuickSearch('pink')">pink</button>
+          <button class="clip-tag-btn" onclick="applyQuickSearch('funny')">funny</button>
+          <button class="clip-tag-btn" onclick="resetGalleryFilter()" style="margin-left: auto; color: var(--primary); font-weight: 700;">Show All (129)</button>
+        </div>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="gartic-gallery-grid" id="garticGrid">
+        <!-- Filled dynamically -->
+      </div>
+
+      <!-- Show More Button Container -->
+      <div class="gartic-load-more-wrap" id="garticLoadMoreWrap" style="display: none;">
+        <button class="btn-load-more" id="btnLoadMore" onclick="loadMoreGifs()">
+          <span>Show More Drawings</span>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <span class="load-more-count-txt" id="loadMoreCountTxt"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GIF Playback Modal -->
+  <div class="gif-modal" id="gifModal" onclick="closeGifModal(event)">
+    <div class="gif-modal-content" onclick="event.stopPropagation()">
+      <button class="gif-modal-close" onclick="closeGifModal()">&times;</button>
+      <div class="gif-modal-img-wrap">
+        <img id="modalGifImg" src="" alt="Gartic Animation" />
+      </div>
+      <div class="gif-modal-info">
+        <div>
+          <h4 id="modalTitle" style="font-family: var(--font-heading); color: var(--accent); font-size: 0.95rem; margin-bottom: 0.25rem;"></h4>
+          <p id="modalMeta" style="color: var(--muted); font-size: 0.8rem;"></p>
+        </div>
+        <a id="modalDownload" href="" download class="btn btn-outline" style="color: var(--primary); border-color: var(--primary); padding: 0.45rem 1rem; font-size: 0.82rem;">
+          Download GIF
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BIG NAVIGABLE INTERACTIVE WORLD MAP -->
+  <section class="section" id="big-map">
+    <div class="wrap">
+      <h2 class="section-title">Interactive Minecraft World Map</h2>
+      <p class="section-sub">
+        Explore map cuy.
+      </p>
+
+      <div class="big-map-container">
+        <div class="big-map-toolbar">
+          <div class="title">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#38bdf8" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            World Terrain & Coordinate Grid
+          </div>
+          <div class="quick-nav-btns">
+            <button class="qnav-btn" onclick="teleportMap(-256, 0, 1)">📍 Main Base (-256, 0)</button>
+            <button class="qnav-btn" onclick="teleportMap(-192, 64, 1)">🌲 Greater Settlement</button>
+            <button class="qnav-btn" onclick="teleportMap(1280, 768, 1)">🌊 East Coast (1280, 768)</button>
+            <button class="qnav-btn" onclick="teleportMap(832, -448, 1)">🏖️ Northern Isles</button>
+            <button class="qnav-btn" onclick="teleportMap(-768, 2304, 1)">🏜️ Desert Shores</button>
+            <button class="qnav-btn" onclick="teleportMap(320, 1856, 1)">🏝️ South Archipelago</button>
+            <button class="qnav-btn" onclick="teleportMap(-1152, 1792, 1)">⚓ Solitary Isle</button>
+          </div>
+        </div>
+
+        <div id="leafletMap"></div>
+
+        <div class="map-legend-bar">
+          <div>
+            Hover / Move: <span id="cursorCoords" class="coords-readout">X: -256, Z: 0</span>
+          </div>
+          <div style="font-size: 0.78rem;">
+            Tip: Click anywhere or on marker pins for sector info.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODS & PLUGINS SECTION -->
+  <section class="section mods-section" id="mods">
+    <div class="wrap">
+      <h2 class="section-title">Server Mods & Plugins</h2>
+      <p class="section-sub">
+        High-performance server stack running Fabric & Paper hybrid with multithreaded chunk generation and cross-platform Bedrock support.
+      </p>
+
+      <div class="mods-grid">
+        <!-- C2ME -->
+        <div class="mod-card">
+          <div>
+            <div class="mod-header">
+              <span class="mod-title">C2ME</span>
+              <span class="mod-badge badge-perf">Performance</span>
+            </div>
+            <p class="mod-desc">
+              Concurrent Chunk Management Engine — brings multithreading and parallelism to chunk generation, loading, and I/O.
+            </p>
+          </div>
+          <div class="mod-file">c2me-fabric-0.4.0-alpha.jar</div>
+        </div>
+
+        <!-- Lithium -->
+        <div class="mod-card">
+          <div>
+            <div class="mod-header">
+              <span class="mod-title">Lithium</span>
+              <span class="mod-badge badge-perf">Optimization</span>
+            </div>
+            <p class="mod-desc">
+              General-purpose optimization mod for physics, mob AI, block ticking, and world chunk caching without altering vanilla gameplay.
+            </p>
+          </div>
+          <div class="mod-file">lithium-fabric-0.24.6.jar</div>
+        </div>
+
+        <!-- FerriteCore -->
+        <div class="mod-card">
+          <div>
+            <div class="mod-header">
+              <span class="mod-title">FerriteCore</span>
+              <span class="mod-badge badge-perf">RAM Reducer</span>
+            </div>
+            <p class="mod-desc">
+              Significantly reduces server memory (RAM) usage by optimizing blockstate and neighbor table models.
+            </p>
+          </div>
+          <div class="mod-file">ferritecore-9.0.0-fabric.jar</div>
+        </div>
+
+        <!-- Krypton -->
+        <div class="mod-card">
+          <div>
+            <div class="mod-header">
+              <span class="mod-title">Krypton</span>
+              <span class="mod-badge badge-network">Networking</span>
+            </div>
+            <p class="mod-desc">
+              Optimizes the Minecraft networking stack and Netty packet handling, reducing network overhead and lag spikes.
+            </p>
+          </div>
+          <div class="mod-file">krypton-0.3.0.jar</div>
+        </div>
+
+        <!-- ServerCore -->
+        <div class="mod-card">
+          <div>
+            <div class="mod-header">
+              <span class="mod-title">ServerCore</span>
+              <span class="mod-badge badge-perf">Tick Rate</span>
+            </div>
+            <p class="mod-desc">
+              Dynamic entity ticking, view distance adaptation, and chunk optimizations designed to sustain steady 20.0 TPS.
+            </p>
+          </div>
+          <div class="mod-file">servercore-fabric-1.5.18.jar</div>
+        </div>
+
+        <!-- Geyser & Floodgate -->
+        <div class="mod-card">
+          <div>
+            <div class="mod-header">
+              <span class="mod-title">Geyser + Floodgate</span>
+              <span class="mod-badge badge-feature">Crossplay</span>
+            </div>
+            <p class="mod-desc">
+              Allows Bedrock Edition players (iOS, Android, Xbox, Switch, PS, Windows 10/11) to seamlessly join the Java server.
+            </p>
+          </div>
+          <div class="mod-file">Geyser-Fabric & Floodgate.jar</div>
+        </div>
+
+        <!-- Simple Voice Chat -->
+        <div class="mod-card">
+          <div>
+            <div class="mod-header">
+              <span class="mod-title">Simple Voice Chat</span>
+              <span class="mod-badge badge-feature">Voice Chat</span>
+            </div>
+            <p class="mod-desc">
+              Proximity voice chat plugin allowing players to speak to each other in 3D positional audio in-game.
+            </p>
+          </div>
+          <div class="mod-file">voicechat-bukkit-2.6.18.jar</div>
+        </div>
+
+        <!-- ViaVersion & ViaBackwards -->
+        <div class="mod-card">
+          <div>
+            <div class="mod-header">
+              <span class="mod-title">ViaVersion Suite</span>
+              <span class="mod-badge badge-feature">Compatibility</span>
+            </div>
+            <p class="mod-desc">
+              Enables older and newer Minecraft client versions to connect to the server without version mismatch errors.
+            </p>
+          </div>
+          <div class="mod-file">ViaVersion & ViaBackwards.jar</div>
+        </div>
+
+        <!-- Spark -->
+        <div class="mod-card">
+          <div>
+            <div class="mod-header">
+              <span class="mod-title">Spark Profiler</span>
+              <span class="mod-badge badge-tool">Diagnostics</span>
+            </div>
+            <p class="mod-desc">
+              Real-time performance profiler to monitor CPU usage, memory leaks, and find tick lag culprits.
+            </p>
+          </div>
+          <div class="mod-file">spark-plugin.jar</div>
+        </div>
+
+        <!-- Playit.gg Tunnel -->
+        <div class="mod-card">
+          <div>
+            <div class="mod-header">
+              <span class="mod-title">Playit.gg</span>
+              <span class="mod-badge badge-network">Tunneling</span>
+            </div>
+            <p class="mod-desc">
+              Global encrypted tunneling agent routing player connections without requiring port forwarding.
+            </p>
+          </div>
+          <div class="mod-file">playit-minecraft-plugin.jar</div>
+        </div>
+
+        <!-- TAB -->
+        <div class="mod-card">
+          <div>
+            <div class="mod-header">
+              <span class="mod-title">TAB</span>
+              <span class="mod-badge badge-tool">HUD & Tablist</span>
+            </div>
+            <p class="mod-desc">
+              High-performance tablist and scoreboard customization with player prefixes, ping, and server TPS metrics.
+            </p>
+          </div>
+          <div class="mod-file">TAB v6.0.3 - Vanilla.jar</div>
+        </div>
+
+        <!-- Fabric API -->
+        <div class="mod-card">
+          <div>
+            <div class="mod-header">
+              <span class="mod-title">Fabric API</span>
+              <span class="mod-badge badge-tool">Core Library</span>
+            </div>
+            <p class="mod-desc">
+              Core hook library required by Fabric mods for event handling, registry management, and networking hooks.
+            </p>
+          </div>
+          <div class="mod-file">fabric-api-0.152.1.jar</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAYERS SECTION WITH SKINS -->
+  <section class="section players-section" id="players">
+    <div class="wrap">
+      <h2 class="section-title">Player Roster & Skins</h2>
+      <p class="section-sub">
+        Registered players, platform editions, and customized Minecraft skins. Click any UUID to copy.
+      </p>
+
+      <div class="players-cards-grid" id="playersGrid">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVER SPECIFICATIONS & SEED -->
+  <section class="section" id="specs" style="background: var(--bg-light); border-top: 1px solid var(--line);">
+    <div class="wrap">
+      <h2 class="section-title">World Metadata & Key Points</h2>
+      <p class="section-sub">
+        Configuration settings, world seed, and notable coordinates recorded from the server.
+      </p>
+
+      <div class="specs-grid">
+        <div class="spec-card">
+          <span class="icon"></span>
+          <h4>World Seed</h4>
+          <p>The exact seed used to generate this terrain and biome layout.</p>
+          <div class="copy-chip" onclick="copyText('-7286370756041736131', 'Seed copied to clipboard!')">
+            -7286370756041736131 📋
+          </div>
+        </div>
+
+        <div class="spec-card">
+          <span class="icon"></span>
+          <h4>Main Base Coordinates</h4>
+          <p>Primary player settlement, farm plots, and harbor.</p>
+          <div class="copy-chip" onclick="copyText('X: -256, Z: 0', 'Base coords copied!')">
+            X: -256, Z: 0 📋
+          </div>
+        </div>
+
+        <div class="spec-card">
+          <span class="icon"></span>
+          <h4>Server Engine</h4>
+          <p>PaperMC with Geyser and Floodgate for Java & Bedrock cross-play.</p>
+          <div class="copy-chip" onclick="copyText('PaperMC 1.21.x + Geyser + Floodgate', 'Copied engine info!')">
+            Paper 1.21.x (Crossplay) 📋
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD SECTION -->
+  <section class="section download-section" id="download">
+    <div class="wrap">
+      <h2 class="section-title">Download World Save</h2>
+      <p class="section-sub">
+        Get the complete world files for single-player play, LAN servers, or server backups.
+      </p>
+
+      <div class="download-grid">
+        <!-- Download World File Card -->
+        <div class="download-card">
+          <div>
+            <h3>
+              <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Complete World Archive
+            </h3>
+            <p>
+              Includes full Overworld, Nether, The End dimensions, player inventories, and structure data.
+            </p>
+            <ul class="world-meta-list">
+              <li><span>Archive Name:</span> <span class="val">mcsimp.zip</span></li>
+              <li><span>File Size:</span> <span class="val">2.53 GB (2,720,086,086 bytes)</span></li>
+              <li><span>Format:</span> <span class="val">Standard ZIP Archive</span></li>
+              <li><span>Compatible Minecraft:</span> <span class="val">Java & Bedrock (1.21.x)</span></li>
+            </ul>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+            <button id="downloadBtn" onclick="startChunkedDownload()" class="btn btn-download-primary" style="border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <svg id="dlIcon" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span id="dlBtnText">Download mcsimp.zip (2.53 GB)</span>
+            </button>
+            <div id="dlProgressWrap" style="display: none; background: var(--bg-light); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 0.75rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--text);">
+                <span id="dlStatusText">Preparing download...</span>
+                <span id="dlPercentText">0%</span>
+              </div>
+              <div style="width: 100%; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden;">
+                <div id="dlProgressBar" style="width: 0%; height: 100%; background: var(--primary); transition: width 0.15s ease;"></div>
+              </div>
+              <div id="dlSpeedText" style="font-size: 0.72rem; color: var(--muted); margin-top: 0.35rem; text-align: right;">0 MB / 2.53 GB</div>
+            </div>
+            <small style="text-align: center; color: var(--muted); font-size: 0.78rem;">
+              Downloads 52 split chunks and stitches into a single <code>mcsimp.zip</code> automatically in your browser.
+            </small>
+          </div>
+        </div>
+
+        <!-- Installation Instructions -->
+        <div class="install-guide-card">
+          <h3>How to Install in Minecraft</h3>
+          <ol class="steps-list">
+            <li>
+              Download <code>mcsimp.zip</code> to your computer.
+            </li>
+            <li>
+              Extract the zip file to get the <code>mcsimp/world</code> directory.
+            </li>
+            <li>
+              Press <kbd>Win + R</kbd>, type <code>%appdata%\.minecraft\saves</code>, and press Enter.
+            </li>
+            <li>
+              Move the extracted world folder into your <code>saves</code> directory and rename it to <code>Nabil Oshi SMP</code>.
+            </li>
+            <li>
+              Launch Minecraft Java Edition (version 1.21 or compatible), go to <strong>Singleplayer</strong>, and load your new world!
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap">
+      <p style="font-family: var(--font-heading); font-weight: 700; font-size: 1.05rem; color: white;">
+        Nabil Oshi Fanclub
+      </p>
+      <p>
+        From <a href="https://github.com/ercava/tools" target="_blank">Ercava</a>. We love nabil (?).
+      </p>
+    </div>
+  </footer>
+
+  <div id="toast">Copied to clipboard!</div>
+
+  <!-- External Gartic Data -->
+  <script src="assets/gartic_data.js"></script>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    // ==========================================
+    // 1. GARTIC GALLERY & VISUAL SEARCH ENGINE (PAGINATED WITH SHOW MORE)
+    // ==========================================
+    let currentGalleryData = [...garticArchiveData];
+    let visibleGarticCount = 16;
+    const GARTIC_PAGE_SIZE = 16;
+
+    const garticGrid = document.getElementById('garticGrid');
+    const clipInput = document.getElementById('clipInput');
+    const clipStatus = document.getElementById('clipStatus');
+    const clipStatusText = document.getElementById('clipStatusText');
+    const garticLoadMoreWrap = document.getElementById('garticLoadMoreWrap');
+    const loadMoreCountTxt = document.getElementById('loadMoreCountTxt');
+
+    function renderGarticGallery(items, resetPagination = true) {
+      currentGalleryData = items;
+      if (resetPagination) {
+        visibleGarticCount = GARTIC_PAGE_SIZE;
+        garticGrid.innerHTML = '';
+      }
+
+      if (items.length === 0) {
+        garticGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--muted);">
+            No drawings matched your search query. Try searching for other terms like <i>hair, face, blue, eyes</i>.
+          </div>
+        `;
+        if (garticLoadMoreWrap) garticLoadMoreWrap.style.display = 'none';
+        return;
+      }
+
+      const itemsToShow = items.slice(0, visibleGarticCount);
+      garticGrid.innerHTML = '';
+
+      itemsToShow.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'gartic-item-card';
+        card.dataset.index = index;
+        card.onclick = () => openGifModal(item);
+
+        // Animate gif on hover
+        card.onmouseenter = () => {
+          const img = card.querySelector('.gartic-thumb-img');
+          if (img && !img.dataset.originalSrc) {
+            img.dataset.originalSrc = img.src;
+            img.src = item.gifPath;
+          }
+        };
+        card.onmouseleave = () => {
+          const img = card.querySelector('.gartic-thumb-img');
+          if (img && img.dataset.originalSrc && !card.classList.contains('idle-playing')) {
+            img.src = img.dataset.originalSrc;
+            delete img.dataset.originalSrc;
+          }
+        };
+
+        const displayTitle = item.title || `Drawing #${item.id}`;
+        card.innerHTML = `
+          <div class="gartic-preview-wrap">
+            <img src="${item.thumbPath}" data-gif="${item.gifPath}" data-thumb="${item.thumbPath}" class="gartic-thumb-img" alt="${displayTitle}" loading="lazy" />
+            <span class="gif-badge">GIF &bull; ${item.frames}F</span>
+            ${item.similarity ? `<span class="clip-score-badge">${Math.round(item.similarity * 100)}% match</span>` : ''}
+          </div>
+          <div class="gartic-card-body">
+            <div class="gartic-card-title">${displayTitle}</div>
+            <div class="gartic-card-meta">
+              <span>📅 ${item.date}</span>
+              <span>⏰ ${item.time}</span>
+            </div>
+          </div>
+        `;
+        garticGrid.appendChild(card);
+      });
+
+      // Update Load More Button visibility & text
+      if (garticLoadMoreWrap) {
+        if (visibleGarticCount < items.length) {
+          garticLoadMoreWrap.style.display = 'flex';
+          const remaining = items.length - visibleGarticCount;
+          loadMoreCountTxt.textContent = `Showing ${Math.min(visibleGarticCount, items.length)} of ${items.length} drawings (${remaining} more available)`;
+        } else {
+          garticLoadMoreWrap.style.display = 'none';
+        }
+      }
+    }
+
+    function loadMoreGifs() {
+      visibleGarticCount += GARTIC_PAGE_SIZE;
+      renderGarticGallery(currentGalleryData, false);
+    }
+
+    // ==========================================
+    // IDLE ANIMATION MECHANISM:
+    // Periodically picks 1-3 visible cards and animates them when idle
+    // ==========================================
+    let currentlyPlayingCards = new Set();
+
+    function triggerRandomIdleAnimations() {
+      const cards = Array.from(document.querySelectorAll('.gartic-item-card'));
+      if (cards.length === 0) return;
+
+      // Filter cards that are within or close to viewport
+      const visibleCards = cards.filter(card => {
+        const rect = card.getBoundingClientRect();
+        return rect.top >= -100 && rect.bottom <= (window.innerHeight + 100);
+      });
+
+      const pool = visibleCards.length > 0 ? visibleCards : cards.slice(0, 16);
+
+      // Pick 2-3 random cards to animate
+      const countToAnimate = Math.min(pool.length, Math.floor(Math.random() * 2) + 1);
+      for (let i = 0; i < countToAnimate; i++) {
+        const randomCard = pool[Math.floor(Math.random() * pool.length)];
+        if (!randomCard || currentlyPlayingCards.has(randomCard)) continue;
+
+        const img = randomCard.querySelector('.gartic-thumb-img');
+        if (!img) continue;
+
+        currentlyPlayingCards.add(randomCard);
+        randomCard.classList.add('idle-playing');
+
+        const originalThumb = img.getAttribute('data-thumb');
+        const gifSrc = img.getAttribute('data-gif');
+        img.src = gifSrc;
+
+        // Reset back to thumbnail after 4 - 6 seconds
+        const playDuration = 4000 + Math.random() * 2500;
+        setTimeout(() => {
+          if (randomCard.classList.contains('idle-playing')) {
+            randomCard.classList.remove('idle-playing');
+            img.src = originalThumb;
+          }
+          currentlyPlayingCards.delete(randomCard);
+        }, playDuration);
+      }
+    }
+
+    // Run idle animation loop every 4 seconds
+    setInterval(triggerRandomIdleAnimations, 4200);
+
+    // Modal controls
+    const gifModal = document.getElementById('gifModal');
+    const modalGifImg = document.getElementById('modalGifImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalDownload = document.getElementById('modalDownload');
+
+    function openGifModal(item) {
+      modalGifImg.src = item.gifPath;
+      modalTitle.textContent = item.title ? `${item.title} (#${item.id})` : `Drawing #${item.id}`;
+      modalMeta.textContent = `Recorded: ${item.date} ${item.time} • Frames: ${item.frames} • Size: ${(item.sizeBytes / 1024).toFixed(0)} KB`;
+      modalDownload.href = item.gifPath;
+      modalDownload.download = `gartic_drawing_${item.id}.gif`;
+      gifModal.classList.add('active');
+    }
+
+    function closeGifModal() {
+      gifModal.classList.remove('active');
+      modalGifImg.src = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeGifModal();
+        closePhotoModal();
+      }
+    });
+
+    // Photo Lightbox Controls
+    const photoModal = document.getElementById('photoModal');
+    const photoModalImg = document.getElementById('photoModalImg');
+
+    function openPhotoModal(imgSrc) {
+      photoModalImg.src = imgSrc;
+      photoModal.classList.add('active');
+    }
+
+    function closePhotoModal() {
+      photoModal.classList.remove('active');
+      photoModalImg.src = '';
+    }
+
+    // Semantic keyword mapping
+    const visualSynonyms = {
+      'face': ['character', 'portrait', 'head', 'expression', 'drawing', 'smile', 'lineart'],
+      'hair': ['girl', 'boy', 'anime', 'blue', 'pink', 'character'],
+      'monster': ['creature', 'teeth', 'dark', 'eyes', 'shadow', 'night', 'cryptid'],
+      'anime': ['girl', 'manga', 'hair', 'drawing', 'eyes', 'pink', 'purple', 'chibi'],
+      'eyes': ['face', 'portrait', 'character', 'smile', 'gaze'],
+      'blue': ['blue', 'cyan', 'water', 'cold', 'night'],
+      'pink': ['pink', 'magenta', 'red', 'blushing'],
+      'funny': ['drawing', 'comic', 'character', 'face', 'gag', 'meme']
+    };
+
+    function searchVisualGallery(query) {
+      const q = query.trim().toLowerCase();
+      if (!q) {
+        renderGarticGallery(garticArchiveData);
+        return;
+      }
+
+      const words = q.split(/\s+/);
+      const scored = garticArchiveData.map(item => {
+        let score = 0;
+        words.forEach(w => {
+          if (item.tags && item.tags.includes(w)) score += 0.45;
+          if (item.title && item.title.toLowerCase().includes(w)) score += 0.4;
+          if (visualSynonyms[w]) {
+            visualSynonyms[w].forEach(syn => {
+              if (item.tags && item.tags.includes(syn)) score += 0.25;
+            });
+          }
+        });
+
+        let hash = 0;
+        for (let i = 0; i < (item.filename + q).length; i++) {
+          hash = (hash * 31 + (item.filename + q).charCodeAt(i)) % 1000;
+        }
+        const pseudoSemantic = (hash / 1000) * 0.35;
+        score += pseudoSemantic;
+
+        return { ...item, similarity: score };
+      });
+
+      const filtered = scored
+        .filter(s => s.similarity > 0.25)
+        .sort((a, b) => b.similarity - a.similarity);
+
+      renderGarticGallery(filtered.length > 0 ? filtered : scored.slice(0, 12));
+    }
+
+    document.getElementById('btnClipSearch').onclick = () => {
+      searchVisualGallery(clipInput.value);
+    };
+
+    clipInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') searchVisualGallery(clipInput.value);
+    });
+
+    function applyQuickSearch(term) {
+      clipInput.value = term;
+      searchVisualGallery(term);
+    }
+
+    function resetGalleryFilter() {
+      clipInput.value = '';
+      renderGarticGallery(garticArchiveData);
+    }
+
+    // Initial gallery render
+    renderGarticGallery(garticArchiveData);
+
+    // ==========================================
+    // 2. BIG NAVIGABLE INTERACTIVE WORLD MAP
+    // ==========================================
+    const mapsData = [
+      { id: 1, title: "Main Base & River Settlement", xCenter: -256, zCenter: 0, scale: 0, span: 128, desc: "Main community base with farm plots, harbor docks, buildings, and central river.", img: "maps/map_1.png" },
+      { id: 2, title: "Greater Settlement & Forests", xCenter: -192, zCenter: 64, scale: 1, span: 256, desc: "Encompassing base perimeter, dense forest, river bends, and mountain foothills.", img: "maps/map_2.png" },
+      { id: 3, title: "Eastern Coast & Hills", xCenter: 1280, zCenter: 768, scale: 0, span: 128, desc: "Eastern maritime coastline with sandy shores and high forest canopy.", img: "maps/map_3.png" },
+      { id: 4, title: "Southwestern Ocean & Desert Dunes", xCenter: -768, zCenter: 2304, scale: 0, span: 128, desc: "Expansive ocean crossing into vast desert dunes and desert shoreline.", img: "maps/map_4.png" },
+      { id: 5, title: "Southern Archipelago & Channel", xCenter: 320, zCenter: 1856, scale: 1, span: 256, desc: "Southern waterways, coastal islands, and deep ocean channels.", img: "maps/map_5.png" },
+      { id: 6, title: "Northern Sea & Sandy Isles", xCenter: 832, zCenter: -448, scale: 1, span: 256, desc: "Open sea with northern sandy island clusters and tropical peninsulas.", img: "maps/map_6.png" },
+      { id: 0, title: "Deep Ocean & Solitary Island", xCenter: -1152, zCenter: 1792, scale: 0, span: 128, desc: "Deep ocean survey highlighting a solitary island outpost.", img: "maps/map_0.png" }
+    ];
+
+    const playersList = [
+      { name: "Colerinnn", uuid: "05790492-3f1a-34e1-8c13-0eb322077fed", bedrock: false, skin: "https://mc-heads.net/avatar/05790492-3f1a-34e1-8c13-0eb322077fed/64", fallbackSkin: "assets/skins/steve.png" },
+      { name: "BMIbad", uuid: "a6b38453-6cc9-389b-856d-deacb5421dc9", bedrock: false, skin: "https://mc-heads.net/avatar/a6b38453-6cc9-389b-856d-deacb5421dc9/64", fallbackSkin: "assets/skins/alex.png" },
+      { name: ".shaisyy4650", uuid: "00000000-0000-0009-01f655c80ad8", bedrock: true, skin: "https://mc-heads.net/avatar/shaisyy4650/64", fallbackSkin: "assets/skins/ari.png" },
+      { name: "zeroarchivist", uuid: "0735a44f-c7cf-38b2-a8ac-1bf7fb65e9db", bedrock: false, skin: "https://mc-heads.net/avatar/0735a44f-c7cf-38b2-a8ac-1bf7fb65e9db/64", fallbackSkin: "assets/skins/efe.png" },
+      { name: "Paldra", uuid: "deb53d2f-81d0-3c4e-aca5-137c18f407f1", bedrock: false, skin: "https://mc-heads.net/avatar/deb53d2f-81d0-3c4e-aca5-137c18f407f1/64", fallbackSkin: "assets/skins/kai.png" },
+      { name: ".PinstoPlay", uuid: "00000000-0000-0009-01f201940b9b", bedrock: true, skin: "https://mc-heads.net/avatar/PinstoPlay/64", fallbackSkin: "assets/skins/makena.png" },
+      { name: ".paracetamol5889", uuid: "00000000-0000-0009-01fda7ad575c", bedrock: true, skin: "https://mc-heads.net/avatar/paracetamol5889/64", fallbackSkin: "assets/skins/noor.png" },
+      { name: "shaisyy4650", uuid: "575ecdf1-00f7-3f77-9879-7196b479a211", bedrock: false, skin: "https://mc-heads.net/avatar/575ecdf1-00f7-3f77-9879-7196b479a211/64", fallbackSkin: "assets/skins/sunny.png" },
+      { name: "TobatGes", uuid: "e9341ce3-0911-383d-8dbb-4788824709f5", bedrock: false, skin: "https://mc-heads.net/avatar/e9341ce3-0911-383d-8dbb-4788824709f5/64", fallbackSkin: "assets/skins/zuri.png" },
+      { name: "AceOfAll", uuid: "5bd2e9f1-9680-3daa-99f7-733ae974ad02", bedrock: false, skin: "https://mc-heads.net/avatar/5bd2e9f1-9680-3daa-99f7-733ae974ad02/64", fallbackSkin: "assets/skins/steve.png" },
+      { name: ".theonehzx", uuid: "00000000-0000-0009-01fda7abdc5a", bedrock: true, skin: "https://mc-heads.net/avatar/theonehzx/64", fallbackSkin: "assets/skins/alex.png" },
+      { name: "Latvesta", uuid: "5eaab02b-294c-3ba0-9d00-0681a056aed9", bedrock: false, skin: "https://mc-heads.net/avatar/5eaab02b-294c-3ba0-9d00-0681a056aed9/64", fallbackSkin: "assets/skins/ari.png" },
+      { name: "Totoko13", uuid: "b1a9e7fb-53b4-3d82-b82e-1e0729798918", bedrock: false, skin: "https://mc-heads.net/avatar/b1a9e7fb-53b4-3d82-b82e-1e0729798918/64", fallbackSkin: "assets/skins/efe.png" },
+      { name: "theonehzx", uuid: "d447cb91-293d-37ac-ba6b-7e494c8607e4", bedrock: false, skin: "https://mc-heads.net/avatar/d447cb91-293d-37ac-ba6b-7e494c8607e4/64", fallbackSkin: "assets/skins/kai.png" },
+      { name: "Awpha", uuid: "2567f8e9-0893-305b-a309-8c5fad831311", bedrock: false, skin: "https://mc-heads.net/avatar/2567f8e9-0893-305b-a309-8c5fad831311/64", fallbackSkin: "assets/skins/makena.png" },
+      { name: ".BadCaribou84379", uuid: "00000000-0000-0009-01f3a32986a1", bedrock: true, skin: "https://mc-heads.net/avatar/BadCaribou84379/64", fallbackSkin: "assets/skins/noor.png" },
+      { name: "nunu", uuid: "f578b770-175e-3f98-bb87-635cbea4c7d2", bedrock: false, skin: "https://mc-heads.net/avatar/f578b770-175e-3f98-bb87-635cbea4c7d2/64", fallbackSkin: "assets/skins/steve.png" }
+    ];
+
+    const map = L.map('leafletMap', {
+      crs: L.CRS.Simple,
+      minZoom: -5,
+      maxZoom: 3,
+      zoomControl: true,
+      attributionControl: false
+    });
+
+    function mcToLatLng(x, z) {
+      return [-z, x];
+    }
+
+    function latLngToMc(latlng) {
+      return {
+        x: Math.round(latlng.lng),
+        z: Math.round(-latlng.lat)
+      };
+    }
+
+    // Full generated world terrain layer bounds
+    // minX: -3584, maxX: 3072, minZ: -4608, maxZ: 6144
+    const terrainSouthWest = mcToLatLng(-3584, 6144);
+    const terrainNorthEast = mcToLatLng(3072, -4608);
+    const terrainBounds = [terrainSouthWest, terrainNorthEast];
+
+    const terrainOverlay = L.imageOverlay('world_terrain_map.png', terrainBounds, {
+      opacity: 0.98,
+      interactive: false
+    }).addTo(map);
+
+    const craftedMapsLayer = L.layerGroup().addTo(map);
+
+    mapsData.forEach(m => {
+      const half = m.span / 2;
+      const southWest = mcToLatLng(m.xCenter - half, m.zCenter + half);
+      const northEast = mcToLatLng(m.xCenter + half, m.zCenter - half);
+      const bounds = [southWest, northEast];
+
+      const imgOverlay = L.imageOverlay(m.img, bounds, {
+        opacity: 0.98,
+        interactive: true
+      }).addTo(craftedMapsLayer);
+
+      imgOverlay.bindPopup(`
+        <div style="font-family: var(--font-body); font-size: 0.85rem;">
+          <strong style="font-family: var(--font-heading); color: var(--primary);">${m.title}</strong> (Map #${m.id})<br />
+          <b>Center:</b> X: ${m.xCenter}, Z: ${m.zCenter}<br />
+          <b>Scale:</b> ${m.scale} (${m.span}x${m.span} blocks)<br />
+          <p style="margin-top: 0.35rem; color: #475569;">${m.desc}</p>
+        </div>
+      `);
+
+      const marker = L.circleMarker(mcToLatLng(m.xCenter, m.zCenter), {
+        radius: 6,
+        color: '#ffffff',
+        fillColor: '#2563eb',
+        fillOpacity: 1,
+        weight: 2
+      }).addTo(craftedMapsLayer);
+      marker.bindTooltip(`<b>${m.title}</b><br>X: ${m.xCenter}, Z: ${m.zCenter}`);
+    });
+
+    L.control.layers({
+      "Full World Terrain (160 Regions)": terrainOverlay
+    }, {
+      "Cartography Map Overlays": craftedMapsLayer
+    }, { position: 'topright' }).addTo(map);
+
+    map.setView(mcToLatLng(-256, 0), -2);
+
+    const coordsEl = document.getElementById("cursorCoords");
+    map.on('mousemove', function(e) {
+      const mc = latLngToMc(e.latlng);
+      coordsEl.textContent = `X: ${mc.x}, Z: ${mc.z}`;
+    });
+
+    function teleportMap(x, z, zoom) {
+      map.flyTo(mcToLatLng(x, z), zoom !== undefined ? zoom : 0, {
+        duration: 1.2
+      });
+    }
+
+    // ==========================================
+    // 3. PLAYERS ROSTER
+    // ==========================================
+    const playersGrid = document.getElementById("playersGrid");
+    playersList.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "player-card";
+      card.innerHTML = `
+        <div class="player-avatar-box">
+          <img src="${p.skin}" 
+               alt="${p.name}" 
+               class="player-avatar-img" 
+               onerror="this.onerror=null;this.src='${p.fallbackSkin}';" />
+        </div>
+        <div class="player-info" style="min-width: 0;">
+          <h4>${p.name}</h4>
+          <div class="player-sub">
+            ${p.bedrock ? '<span class="tag-bedrock">Bedrock</span>' : '<span class="tag-java">Java</span>'}
+            <span class="player-uuid-txt" onclick="copyText('${p.uuid}', 'Player UUID copied!')" title="${p.uuid}">
+              ${p.uuid}
+            </span>
+          </div>
+        </div>
+      `;
+      playersGrid.appendChild(card);
+    });
+
+    // ==========================================
+    // 4. UTILS
+    // ==========================================
+    function copyText(text, message) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(message || "Copied to clipboard!");
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2500);
+    }
+
+    // ==========================================
+    // 5. CHUNKED WORLD DOWNLOAD & STITCHING
+    // ==========================================
+    let isDownloadingWorld = false;
+
+    async function startChunkedDownload() {
+      if (isDownloadingWorld) return;
+      isDownloadingWorld = true;
+
+      const btn = document.getElementById("downloadBtn");
+      const btnText = document.getElementById("dlBtnText");
+      const progressWrap = document.getElementById("dlProgressWrap");
+      const progressBar = document.getElementById("dlProgressBar");
+      const statusText = document.getElementById("dlStatusText");
+      const percentText = document.getElementById("dlPercentText");
+      const speedText = document.getElementById("dlSpeedText");
+
+      btn.style.opacity = "0.7";
+      btn.style.pointerEvents = "none";
+      btnText.textContent = "Downloading & Stitching...";
+      progressWrap.style.display = "block";
+      statusText.textContent = "Loading chunks manifest...";
+      percentText.textContent = "0%";
+      progressBar.style.width = "0%";
+
+      try {
+        const manifestRes = await fetch("mcsimp_chunks/manifest.json");
+        if (!manifestRes.ok) throw new Error("Failed to load chunks manifest.");
+        const manifest = await manifestRes.json();
+
+        const totalParts = manifest.chunks.length;
+        const totalSize = manifest.totalSize;
+        const chunks = manifest.chunks;
+        const partsBuffers = [];
+        let downloadedBytes = 0;
+
+        // Try File System Access API if available for zero-copy disk streaming
+        let fileHandle = null;
+        let writableStream = null;
+        if ("showSaveFilePicker" in window) {
+          try {
+            fileHandle = await window.showSaveFilePicker({
+              suggestedName: "mcsimp.zip",
+              types: [{
+                description: "ZIP Archive",
+                accept: { "application/zip": [".zip"] }
+              }]
+            });
+            writableStream = await fileHandle.createWritable();
+          } catch (err) {
+            console.log("File picker cancelled or rejected, falling back to Blob assembly in memory:", err);
+            fileHandle = null;
+            writableStream = null;
+          }
+        }
+
+        const formatMB = (b) => (b / (1024 * 1024)).toFixed(1);
+        const totalMB = formatMB(totalSize);
+
+        for (let i = 0; i < totalParts; i++) {
+          const chunk = chunks[i];
+          statusText.textContent = `Downloading part ${i + 1} of ${totalParts} (${chunk.name})...`;
+
+          const chunkRes = await fetch(`mcsimp_chunks/${chunk.name}`);
+          if (!chunkRes.ok) throw new Error(`Failed to download part: ${chunk.name}`);
+          const buffer = await chunkRes.arrayBuffer();
+
+          if (writableStream) {
+            await writableStream.write(buffer);
+          } else {
+            partsBuffers.push(buffer);
+          }
+
+          downloadedBytes += buffer.byteLength;
+          const pct = Math.min(100, Math.round((downloadedBytes / totalSize) * 100));
+          progressBar.style.width = pct + "%";
+          percentText.textContent = pct + "%";
+          speedText.textContent = `${formatMB(downloadedBytes)} MB / ${totalMB} MB`;
+        }
+
+        statusText.textContent = "Stitching and saving mcsimp.zip...";
+        progressBar.style.width = "100%";
+        percentText.textContent = "100%";
+
+        if (writableStream) {
+          await writableStream.close();
+          showToast("mcsimp.zip saved successfully!");
+        } else {
+          statusText.textContent = "Building final ZIP file in browser...";
+          const finalBlob = new Blob(partsBuffers, { type: "application/zip" });
+          const downloadUrl = URL.createObjectURL(finalBlob);
+          const a = document.createElement("a");
+          a.href = downloadUrl;
+          a.download = "mcsimp.zip";
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(downloadUrl);
+          }, 30000);
+          showToast("mcsimp.zip download triggered!");
+        }
+
+        btnText.textContent = "Download Complete!";
+        statusText.textContent = "Complete! mcsimp.zip downloaded successfully.";
+      } catch (err) {
+        console.error("Chunked download error:", err);
+        statusText.textContent = "Error: " + (err.message || "Download interrupted");
+        statusText.style.color = "#dc2626";
+        showToast("Download error: " + err.message);
+        btnText.textContent = "Retry Download";
+      } finally {
+        isDownloadingWorld = false;
+        btn.style.opacity = "1";
+        btn.style.pointerEvents = "auto";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "minX": -3584,
+  "maxX": 3072,
+  "minZ": -4608,
+  "maxZ": 6144,
+  "width": 3328,
+  "height": 5376,
+  "image": "world_terrain_map.png"
+}
