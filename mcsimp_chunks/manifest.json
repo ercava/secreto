@@ -1,0 +1,268 @@
+{
+  "originalName": "mcsimp.zip",
+  "totalSize": 2720086086,
+  "chunkSize": 52428800,
+  "totalParts": 52,
+  "chunks": [
+    {
+      "name": "mcsimp.zip.part000",
+      "size": 52428800,
+      "index": 0
+    },
+    {
+      "name": "mcsimp.zip.part001",
+      "size": 52428800,
+      "index": 1
+    },
+    {
+      "name": "mcsimp.zip.part002",
+      "size": 52428800,
+      "index": 2
+    },
+    {
+      "name": "mcsimp.zip.part003",
+      "size": 52428800,
+      "index": 3
+    },
+    {
+      "name": "mcsimp.zip.part004",
+      "size": 52428800,
+      "index": 4
+    },
+    {
+      "name": "mcsimp.zip.part005",
+      "size": 52428800,
+      "index": 5
+    },
+    {
+      "name": "mcsimp.zip.part006",
+      "size": 52428800,
+      "index": 6
+    },
+    {
+      "name": "mcsimp.zip.part007",
+      "size": 52428800,
+      "index": 7
+    },
+    {
+      "name": "mcsimp.zip.part008",
+      "size": 52428800,
+      "index": 8
+    },
+    {
+      "name": "mcsimp.zip.part009",
+      "size": 52428800,
+      "index": 9
+    },
+    {
+      "name": "mcsimp.zip.part010",
+      "size": 52428800,
+      "index": 10
+    },
+    {
+      "name": "mcsimp.zip.part011",
+      "size": 52428800,
+      "index": 11
+    },
+    {
+      "name": "mcsimp.zip.part012",
+      "size": 52428800,
+      "index": 12
+    },
+    {
+      "name": "mcsimp.zip.part013",
+      "size": 52428800,
+      "index": 13
+    },
+    {
+      "name": "mcsimp.zip.part014",
+      "size": 52428800,
+      "index": 14
+    },
+    {
+      "name": "mcsimp.zip.part015",
+      "size": 52428800,
+      "index": 15
+    },
+    {
+      "name": "mcsimp.zip.part016",
+      "size": 52428800,
+      "index": 16
+    },
+    {
+      "name": "mcsimp.zip.part017",
+      "size": 52428800,
+      "index": 17
+    },
+    {
+      "name": "mcsimp.zip.part018",
+      "size": 52428800,
+      "index": 18
+    },
+    {
+      "name": "mcsimp.zip.part019",
+      "size": 52428800,
+      "index": 19
+    },
+    {
+      "name": "mcsimp.zip.part020",
+      "size": 52428800,
+      "index": 20
+    },
+    {
+      "name": "mcsimp.zip.part021",
+      "size": 52428800,
+      "index": 21
+    },
+    {
+      "name": "mcsimp.zip.part022",
+      "size": 52428800,
+      "index": 22
+    },
+    {
+      "name": "mcsimp.zip.part023",
+      "size": 52428800,
+      "index": 23
+    },
+    {
+      "name": "mcsimp.zip.part024",
+      "size": 52428800,
+      "index": 24
+    },
+    {
+      "name": "mcsimp.zip.part025",
+      "size": 52428800,
+      "index": 25
+    },
+    {
+      "name": "mcsimp.zip.part026",
+      "size": 52428800,
+      "index": 26
+    },
+    {
+      "name": "mcsimp.zip.part027",
+      "size": 52428800,
+      "index": 27
+    },
+    {
+      "name": "mcsimp.zip.part028",
+      "size": 52428800,
+      "index": 28
+    },
+    {
+      "name": "mcsimp.zip.part029",
+      "size": 52428800,
+      "index": 29
+    },
+    {
+      "name": "mcsimp.zip.part030",
+      "size": 52428800,
+      "index": 30
+    },
+    {
+      "name": "mcsimp.zip.part031",
+      "size": 52428800,
+      "index": 31
+    },
+    {
+      "name": "mcsimp.zip.part032",
+      "size": 52428800,
+      "index": 32
+    },
+    {
+      "name": "mcsimp.zip.part033",
+      "size": 52428800,
+      "index": 33
+    },
+    {
+      "name": "mcsimp.zip.part034",
+      "size": 52428800,
+      "index": 34
+    },
+    {
+      "name": "mcsimp.zip.part035",
+      "size": 52428800,
+      "index": 35
+    },
+    {
+      "name": "mcsimp.zip.part036",
+      "size": 52428800,
+      "index": 36
+    },
+    {
+      "name": "mcsimp.zip.part037",
+      "size": 52428800,
+      "index": 37
+    },
+    {
+      "name": "mcsimp.zip.part038",
+      "size": 52428800,
+      "index": 38
+    },
+    {
+      "name": "mcsimp.zip.part039",
+      "size": 52428800,
+      "index": 39
+    },
+    {
+      "name": "mcsimp.zip.part040",
+      "size": 52428800,
+      "index": 40
+    },
+    {
+      "name": "mcsimp.zip.part041",
+      "size": 52428800,
+      "index": 41
+    },
+    {
+      "name": "mcsimp.zip.part042",
+      "size": 52428800,
+      "index": 42
+    },
+    {
+      "name": "mcsimp.zip.part043",
+      "size": 52428800,
+      "index": 43
+    },
+    {
+      "name": "mcsimp.zip.part044",
+      "size": 52428800,
+      "index": 44
+    },
+    {
+      "name": "mcsimp.zip.part045",
+      "size": 52428800,
+      "index": 45
+    },
+    {
+      "name": "mcsimp.zip.part046",
+      "size": 52428800,
+      "index": 46
+    },
+    {
+      "name": "mcsimp.zip.part047",
+      "size": 52428800,
+      "index": 47
+    },
+    {
+      "name": "mcsimp.zip.part048",
+      "size": 52428800,
+      "index": 48
+    },
+    {
+      "name": "mcsimp.zip.part049",
+      "size": 52428800,
+      "index": 49
+    },
+    {
+      "name": "mcsimp.zip.part050",
+      "size": 52428800,
+      "index": 50
+    },
+    {
+      "name": "mcsimp.zip.part051",
+      "size": 46217286,
+      "index": 51
+    }
+  ]
+}
